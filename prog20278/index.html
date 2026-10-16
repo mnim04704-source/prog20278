@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>  تطبيق صديق المبرمج والطالب</title>
+    <link rel="stylesheet" href="css/style.css?v=98">
+    <link rel="manifest" href="manifest.json">
+
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="3.jpg">
+    <link rel="apple-touch-icon" sizes="152x152" href="3.jpg">
+    <link rel="apple-touch-icon" sizes="120x120" href="3.jpg">
+    <link rel="shortcut icon" href="icon-192.png" type="image/png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
+    <link href="vendor/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    
+    <meta name="theme-color" content="#09090a">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="صديق المبرمج">
+    
+    <meta name="description" content="تطبيق متكامل لمساعدة الطلاب في تنظيم دراستهم ومحاضراتهم وبرمجتهم.">
+
+</head>
+
+<body>
+    <div id="activation-overlay" class="activation-overlay">
+        <div class="activation-card">
+            <div class="activation-brand-mark">
+                <img src="mn.png" alt="شعار صديق المبرمج">
+            </div>
+<p class="activation-eyebrow">صديق المبرمج والطالب</p>
+<h2 id="activation-title">تنشيط التطبيق</h2>
+<p class="activation-description" id="activation-description"></p>
+            
+            <div class="activation-device-box">
+                <div class="activation-label-row">
+                    <span>معرف جهازك</span>
+                    <span class="activation-hint">أرسله إلى Mohammed</span>
+                </div>
+                <div class="activation-device-row">
+                    <code id="display-device-id">الصق الكود  هنا </code>
+                    <button onclick="app.copyDeviceId()" class="activation-copy-btn" title="نسخ المعرف" aria-label="نسخ المعرف"><i class="fa-solid fa-copy"></i></button>
+                </div>
+            </div>
+
+            <div class="activation-form">
+                <label for="activation-key-input" id="activation-key-label"> أدخل كود التفعيل </label>
+                <input type="text" id="activation-key-input" class="activation-key-input" placeholder="WEB-XXXX-XXXX" autocomplete="off" spellcheck="false">
+                <button onclick="app.handleActivation()" class="activation-submit">تفعيل الآن <i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+            <div class="activation-contact">
+                <span id="activation-contact-note">ليس لديك كود؟</span>
+                <a id="instagram-contact-link" href="https://instagram.com/web_vp2" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-instagram"></i>
+                    تواصل عبر انستقرام
+                </a>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="splash-screen"
+        style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-light, #efebeb); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease-out, visibility 0.5s ease-out;">
+        <div class="splash-logo-shell">
+            <div class="splash-logo-ring">
+                <img src="mn.png" alt="شعار التطبيق" class="splash-logo">
+            </div>
+        </div>
+        <h6
+            style="color: var(--text-main, #1e293b); font-weight: 800; font-size: 1.4rem; margin: 0; letter-spacing: 1px;">
+              مرحباً بكم  </h6>
+        <p style="color: var(--text-muted, #64748b); margin-top: 8px; font-size: 0.9rem;">     في تطبيق صديق المبرمج والطالب</p>
+
+        <p style="color: var(--text-muted, #64748b); margin-top: 8px; font-size: 0.9rem;">رفيقك الأكاديمي الذكي</p>
+        <div
+            style="margin-top: 40px; width: 35px; height: 35px; border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid var(--primary, #08080b); border-radius: 50%; animation: spin-loader 1s linear infinite;">
+        </div>
+    </div>
+
+    <style>
+        @keyframes pulse-logo {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.05);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            }
+        }
+
+        @keyframes spin-loader {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+@keyframes pulse-timer {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
+    <script>
+
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    splash.style.visibility = 'hidden';
+                    setTimeout(() => splash.remove(), 500); // إزالة العنصر بعد انتهاء الانيميشن
+                }
+            }, 1200); // تظهر لمدة 1.2 ثانية كحد أدنى
+        });
+    </script>
+
+   
+    
+
+    
+    <div class="bg-animated">
+        <div class="blob1"></div>
+        <div class="blob2"></div>
+        <div class="blob3"></div>
+    </div>
+
+    
+    <div class="app-container">
+
+        
+        <header class="glass-panel">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="btn-theme-toggle" class="header-action-btn" onclick="app.toggleTheme()" aria-label="تبديل الوضع">
+                    <i id="header-theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+                <h5 id="page-title"> Hello World  🎓</h5>
+            </div>
+            
+            <div id="mini-timer-container" onclick="app.openFocusMode()" style="display: none; align-items: center; gap: 6px; background: rgba(79, 70, 229, 0.1); padding: 5px 12px; border-radius: 20px; cursor: pointer; border: 1px solid rgba(79, 70, 229, 0.2);">
+                <i class="fa-solid fa-brain" style="font-size: 0.8rem; color: var(--primary);"></i>
+                <span id="mini-timer-text" style="font-size: 0.85rem; font-weight: bold; color: var(--primary);">25:00</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <button id="btn-notifications" aria-label="الإشعارات"
+                    onclick="app.openNotificationsPage()" style="position: relative;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span id="notifications-badge">0</span>
+                </button>
+            </div>
+        </header>
+
+        
+        <main id="main-content">
+
+            <section id="sec-notifications" class="view-section">
+                <div class="custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-home')"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2><i class="fa-solid fa-bell text-primary"></i> الإشعارات</h2>
+                    <button class="danger-btn ml-auto" onclick="app.clearNotifications()"><i class="fa-solid fa-trash"></i> مسح الكل</button>
+                </div>
+                <div id="notifications-list" class="items-list">
+                    
+                </div>
+            </section>
+
+
+
+            
+            <section id="sec-home" class="view-section active">
+                <div class="bento-grid">
+                    
+                    
+                    <div class="bento-card bento-hero" id="today-dashboard" onclick="app.openFocusMode()">
+                        <img src="12.jpg" class="dashboard-bg-img" id="dashboard-bg-img" alt="study background">
+                        <div class="bento-hero-overlay"></div>
+                        <div class="bento-hero-content">
+                            <div class="bento-hero-top">
+                                <span class="bento-badge" id="today-date-display">...</span>
+                                <div id="streak-display" class="bento-streak-pill" title="سلسلة الأيام المتتالية">
+                                    <i class="fa-solid fa-fire text-orange"></i>
+                                    <span id="streak-count" class="mono-font">0</span>
+                                    <span class="streak-lbl">يوم</span>
+                                </div>
+                            </div>
+                            <div class="bento-hero-main">
+                                <h3 class="bento-greeting"><i class="fa-solid fa-bolt text-warning"></i> <span id="dashboard-greeting">مرحباً بك</span></h3>
+                                <div id="exam-countdown-display" class="exam-countdown-mini"></div>
+                            </div>
+                            <div class="bento-hero-footer">
+                                <div id="today-summary-mini" class="bento-mini-summary"></div>
+                                <span class="bento-focus-btn"><i class="fa-solid fa-brain"></i> وضع التركيز</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="bento-card bento-compact" id="bento-live-card" onclick="app.switchView('sec-weekly-schedule')">
+                        <div class="bento-card-header">
+                            <span class="bento-card-title">الموعد الدراسي القادم</span>
+                        </div>
+                        <div class="bento-live-body" id="bento-next-class-info">
+                            <div class="bento-live-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                            <div class="bento-live-text">
+                                <span class="bento-live-name" id="bento-live-subject">جاري فحص المواعيد...</span>
+                                <span class="bento-live-time" id="bento-live-time">اليوم</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-compact" id="bento-code-card" onclick="app.switchView('sec-cpp')">
+                        <div class="bento-card-header">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <i class="fa-solid fa-terminal text-primary"></i>
+                                <span class="bento-card-title">محرر الأكواد</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-left bento-arrow"></i>
+                        </div>
+                        <div class="bento-code-body">
+                            <div class="bento-stat-icon" id="stat-lang-icon" style="color: #00599c; background: rgba(0, 89, 156, 0.12);">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div class="bento-code-info">
+                                <span class="bento-lbl">اللغة النشطة</span>
+                                <span class="bento-val mono-font" dir="ltr">(<span id="stat-most-learned-lang">C++</span>)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div id="overdue-tasks-stories" class="overdue-stories bento-full" aria-label="المهام المتأخرة"></div>
+
+                    
+                    <div class="wallet-completed-panel bento-full">
+                        <div class="wallet-completed-grid">
+                            <div class="wallet-completed-column">
+                                <button class="wallet-completed-heading" onclick="app.switchView('sec-subjects')">
+                                    <span><i class="fa-solid fa-book-open text-primary"></i> الدروس المنجزة</span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </button>
+                                <div id="home-completed-lessons" class="wallet-completed-list"></div>
+                            </div>
+                            <div class="wallet-completed-column">
+                                <button class="wallet-completed-heading" onclick="app.switchView('sec-tasks')">
+                                    <span><i class="fa-solid fa-list-check text-warning"></i> المهام المنجزة</span>
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </button>
+                                <div id="home-completed-tasks" class="wallet-completed-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            
+            <section id="sec-weekly-schedule" class="view-section">
+                <div class="glass-card mb-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                        <div>
+                            <h3><i class="fa-regular fa-calendar-days text-primary"></i></h3>
+                            <p class="text-muted">قم بتنظيم أوقات دراستك بفاعلية.</p>
+                        </div>
+                        <button class="btn-primary section-quick-add-btn" onclick="app.openModal('schedule-modal')" title="إضافة موعد">
+                            <i class="fa-solid fa-plus"></i> <span>إضافة</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="schedule-list" class="schedule-grid">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-lectures" class="view-section">
+                <div class="section-header-row mb-3">
+                    <div class="glass-card section-header-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                            <div>
+                                <h2><i class="fa-solid fa-book-open text-primary"></i> المحاضرات</h2>
+                                <p class="text-muted">متابعة وتسجيل المحاضرات الخاصة بك.</p>
+                            </div>
+                            <div class="search-bar-container section-search-compact glass-card p-2">
+                                <div class="search-input-wrap">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="lectures-search-input" class="glass-input compact-search-input" placeholder="ابحث عن محاضرة أو أستاذ..." oninput="app.renderLectures()">
+                                </div>
+                            </div>
+                            <button class="btn-primary section-quick-add-btn" onclick="app.openModal('lecture-modal')" title="إضافة محاضرة">
+                                <i class="fa-solid fa-plus"></i> <span>إضافة</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="lectures-list" class="items-list">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-tasks" class="view-section">
+                <div class="section-header-row mb-3">
+                    <div class="glass-card section-header-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                            <div>
+                                <h2><i class="fa-solid fa-list-check text-primary"></i> المهام</h2>
+                                <p class="text-muted">قائمة المهام والواجبات المطلوبة.</p>
+                            </div>
+                            <div class="search-bar-container section-search-compact glass-card p-2">
+                                <div class="search-input-wrap">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="tasks-search-input" class="glass-input compact-search-input" placeholder="ابحث عن مهمة..." oninput="app.renderTasks()">
+                                </div>
+                            </div>
+                            <button class="btn-primary section-quick-add-btn" onclick="app.openModal('task-modal')" title="إضافة مهمة">
+                                <i class="fa-solid fa-plus"></i> <span>إضافة</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-tabs mb-3 glass-card p-2 flex-row">
+                    <button class="filter-btn" data-filter="all">الكل</button>
+                    <button class="filter-btn active" data-filter="pending">قيد الإنجاز</button>
+                    <button class="filter-btn" data-filter="completed">مكتمل</button>
+                </div>
+                <div id="tasks-list" class="items-list">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-reports" class="view-section">
+                <div class="reports-modern-shell">
+                    <div class="report-header-banner glass-card">
+                        <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                        <div class="report-header-copy">
+                            <span class="report-kicker"> الاحصائيات</span>
+                            <h3>تقاريرك الدراسية</h3>
+                        </div>
+                        <div class="report-header-badge"><i class="fa-solid fa-chart-simple"></i> هذا الأسبوع</div>
+                    </div>
+
+                    <div class="report-tabs">
+                        <button class="report-tab active" data-report-tab="overview" type="button">نظرة عامة</button>
+                        <button class="report-tab" data-report-tab="performance" type="button">الأداء</button>
+                        <button class="report-tab" data-report-tab="achievements" type="button">الإنجازات</button>
+                    </div>
+
+                    <div id="report-overview" class="report-tab-panel active">
+                        <div class="reports-analytics-grid">
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#2b6cb0;">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-star"></i></div>
+                                <span class="stat-label">إجمالي النقاط</span>
+                                <span class="stat-value"><span id="user-points">0</span></span>
+                                <span class="stat-trend positive">+12%</span>
+                            </div>
+
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#2563eb;" title="إجمالي عدد الساعات التي تم فيها استخدام التطبيق">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-clock"></i></div>
+                                <span class="stat-label">عدد ساعات الاستخدام</span>
+                                <span class="stat-value"><span id="usage-time-display">00:00</span></span>
+                                <span class="stat-trend">Live</span>
+                            </div>
+
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#22c55e;">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-brain"></i></div>
+                                <span class="stat-label">جلسات التركيز</span>
+                                <span class="stat-value"><span id="focus-sessions-count">0</span></span>
+                                <span class="stat-trend positive">+3</span>
+                            </div>
+
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#0ea5e9;">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-list-check"></i></div>
+                                <span class="stat-label">المهام المكتملة</span>
+                                <span class="stat-value"><span id="stat-completed">0</span></span>
+                                <span class="stat-trend positive">مؤكد</span>
+                            </div>
+
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#f59e0b;">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-hourglass-half"></i></div>
+                                <span class="stat-label">مهام متبقية</span>
+                                <span class="stat-value"><span id="stat-pending">0</span></span>
+                                <span class="stat-trend neutral">قيد التنفيذ</span>
+                            </div>
+
+                            <div class="stat-analytics-card stat-icon-card" style="--accent:#8b5cf6;">
+                                <div class="stat-icon-circle"><i class="fa-solid fa-book"></i></div>
+                                <span class="stat-label">المحاضرات</span>
+                                <span class="stat-value"><span id="stat-lectures">0</span></span>
+                                <span class="stat-trend positive">تحديث</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-card report-panel-card report-panel-wide chart-panel-card">
+                            <div class="report-header-inline">
+                                <h4 class="report-section-title"><i class="fa-solid fa-chart-column"></i> إحصائيات الأسبوع</h4>
+                                <span class="report-week-badge">آخر 7 أيام</span>
+                            </div>
+                            <div class="report-chart-wrap">
+                                <canvas id="weekly-analytics-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="report-performance" class="report-tab-panel">
+                        <div class="report-panel-grid">
+                            <div class="glass-card report-panel-card report-panel-wide">
+                                <div class="report-header-inline">
+                                    <h4 class="report-section-title"><i class="fa-solid fa-star" style="color:#f59e0b;"></i> الدرجات والمعدل التراكمي</h4>
+                                    <div id="gpa-badge" class="gpa-main-badge">-</div>
+                                </div>
+                                <div id="grades-report-list">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="glass-card report-panel-card">
+                                <h4 class="report-section-title"><i class="fa-solid fa-code"></i> تقدم البرمجة</h4>
+                                <div id="cpp-reports-list">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="report-achievements" class="report-tab-panel">
+                        <div class="report-panel-grid">
+                            <div class="glass-card report-panel-card report-panel-wide">
+                                <div class="report-header-inline">
+                                    <h4 class="report-section-title"><i class="fa-solid fa-calendar-week"></i> ملخص الأسبوع</h4>
+                                    <span class="report-week-badge">آخر 7 أيام</span>
+                                </div>
+                                <div id="weekly-summary-list" class="weekly-summary-list">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="glass-card report-panel-card">
+                                <h4 class="report-section-title"><i class="fa-solid fa-medal"></i> الأوسمة والمكافآت</h4>
+                                <div id="badges-container" class="report-badges-list">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section id="sec-subjects" class="view-section">
+                <div class="subjects-master-card">
+                    <div class="smc-head">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                            <div class="smc-title">
+                                <h2><i class="fa-solid fa-layer-group"></i> المواد الدراسية</h2>
+                                <p>تتبع تقدمك في كل مادة.</p>
+                            </div>
+                        </div>
+                        <div class="smc-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="subjects-search-input" placeholder="ابحث عن مادة أو درس..." oninput="app.renderSubjects()">
+                        </div>
+                    </div>
+                    <div id="subjects-stats" class="smc-stats"></div>
+                </div>
+                <div id="subjects-list" class="items-list" style="margin-top: 20px;">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-exams" class="view-section">
+                <div class="glass-card mb-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                        <div>
+                            <h2><i class="fa-solid fa-graduation-cap text-primary"></i> الامتحانات</h2>
+                            <p class="text-muted">تتبع مواعيد امتحاناتك القادمة.</p>
+                        </div>
+                        <button class="btn-primary section-quick-add-btn" onclick="app.openModal('exam-modal')" title="إضافة امتحان">
+                            <i class="fa-solid fa-plus"></i> <span>إضافة</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="exams-list" class="items-list">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-flashcards" class="view-section">
+                <div class="glass-card mb-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                        <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-right"></i></button>
+                        <div>
+                            <h2><i class="fa-solid fa-clone text-primary"></i> البطاقات التعليمية</h2>
+                            <p class="text-muted">قم بإنشاء بطاقات المراجعة السريعة.</p>
+                        </div>
+                        <button class="btn-primary section-quick-add-btn" onclick="app.openModal('flashcard-modal')" title="إضافة بطاقة">
+                            <i class="fa-solid fa-plus"></i> <span>إضافة</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-row mb-3">
+                    <button class="btn-primary flex-1" onclick="app.startFlashcardStudy()" id="btn-start-study">
+                        <i class="fa-solid fa-play"></i> ابدأ المراجعة <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div id="flashcards-list" class="items-list">
+                    
+                </div>
+            </section>
+
+            
+            <section id="sec-more" class="view-section">
+                <div class="more-grid">
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-settings')">
+                        <div class="icon-box"><i class="fa-solid fa-gear"></i></div>
+                        <span>الإعدادات</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-weekly-schedule')">
+                        <div class="icon-box"><i class="fa-regular fa-calendar-days"></i></div>
+                        <span>الجدول الدراسي</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-exams')">
+                        <div class="icon-box"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <span>امتحانات</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-reports')">
+                        <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+                        <span>التقارير</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-flashcards')">
+                        <div class="icon-box"><i class="fa-solid fa-clone"></i></div>
+                        <span>بطاقات مراجعة</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-lectures')">
+                        <div class="icon-box"><i class="fa-solid fa-book"></i></div>
+                        <span>محاضرات</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-programming')">
+                        <div class="new-badge">جديد</div>
+                        <div class="icon-box"><i class="fa-solid fa-laptop-code"></i></div>
+                        <span>تحديات برمجية</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-cpp')">
+                        <div class="icon-box"><i class="fa-solid fa-code"></i></div>
+                        <span>محرر الأكواد</span>
+                    </div>
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-solved-projects')">
+                        <div class="icon-box"><i class="fa-solid fa-circle-check text-success"></i></div>
+                        <span>مشاريع تم حلها</span>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section id="sec-settings" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-more')"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2>الإعدادات العامة</h2>
+                    <a href="https://instagram.com/web_vp2" target="_blank" class="contact-dev-btn ms-auto"><i class="fa-brands fa-instagram"></i> خدمة العملاء</a>
+                </div>
+
+                <div class="menu-list">
+                    <div class="glass-card menu-item" onclick="document.getElementById('notif-toggle-switch').click()">
+                        <i class="fa-solid fa-bell text-warning"></i>
+                        <span>تفعيل الإشعارات</span>
+                        <label class="ios-switch ms-auto" onclick="event.stopPropagation()">
+                            <input type="checkbox" id="notif-toggle-switch" onchange="app.requestNotificationPermission()">
+                            <span class="ios-slider"></span>
+                        </label>
+                    </div>
+                    <div class="glass-card menu-item" onclick="app.testNotification()">
+                        <i class="fa-solid fa-paper-plane text-primary"></i>
+                        <span>إرسال إشعار تجريبي</span>
+                        <i class="fa-solid fa-chevron-left ms-auto"></i>
+                    </div>
+                    <div class="glass-card menu-item" onclick="document.getElementById('battery-saver-switch').click()">
+                        <i class="fa-solid fa-battery-half text-success" id="battery-icon"></i>
+                        <span>وضع توفير البطارية</span>
+                        <label class="ios-switch ms-auto" onclick="event.stopPropagation()">
+                            <input type="checkbox" id="battery-saver-switch" onchange="app.toggleBatterySaver()">
+                            <span class="ios-slider"></span>
+                        </label>
+                    </div>
+                    <div class="glass-card menu-item" onclick="app.openModal('personalization-modal')">
+                        <i class="fa-solid fa-palette" style="color: #ec4899;"></i>
+                        <span>التخصيص والمظهر</span>
+                        <i class="fa-solid fa-chevron-left ms-auto"></i>
+                    </div>
+
+                    <div class="glass-card menu-item" onclick="app.switchView('sec-levels')">
+                        <i class="fa-solid fa-layer-group" style="color: #8b5cf6;"></i>
+                        <span>المستويات الدراسية</span>
+                        <span class="level-badge" id="current-level-badge">المستوى الأول</span>
+                        <i class="fa-solid fa-chevron-left ms-auto"></i>
+                    </div>
+                 
+                    <div class="glass-card menu-item" onclick="app.switchView('sec-trash')">
+                        <i class="fa-solid fa-trash-can text-danger"></i>
+                        <span>سلة المحذوفات</span>
+                        <i class="fa-solid fa-chevron-left ms-auto"></i>
+                    </div>
+
+                    </div>
+            </section>
+
+
+
+            <section id="sec-trash" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-settings')"><i
+                            class="fa-solid fa-arrow-right"></i></button>
+                    <h2>سلة المحذوفات</h2>
+                    <button class="danger-btn ml-auto" onclick="app.emptyTrash()"><i class="fa-solid fa-trash"></i>
+                        إفراغ</button>
+                </div>
+                <div id="trash-list" class="items-list">
+                </div>
+            </section>
+
+            
+            <section id="sec-levels" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-settings')"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2>المستويات الدراسية</h2>
+                    <button class="level-btn level-btn--add ms-auto" onclick="app.addNewLevel()"><i class="fa-solid fa-plus"></i> مستوى جديد</button>
+                </div>
+
+                <div class="glass-card level-current-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <div>
+                        <div class="level-current-label">أنت الآن تدرس في</div>
+                        <div class="level-current-name" id="current-level-title">المستوى الأول</div>
+                    </div>
+                </div>
+
+                <div class="glass-card level-select-card">
+                    <label for="level-nav-select"><i class="fa-solid fa-arrows-rotate"></i> الانتقال السريع:</label>
+                    <select id="level-nav-select" onchange="app.switchToLevel(this.value)">
+                        <option value="">اختر المستوى...</option>
+                    </select>
+                </div>
+
+                <div id="levels-list" class="items-list">
+                </div>
+            </section>
+
+            
+            <section id="sec-programming" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-more')"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2><i class="fa-solid fa-laptop-code text-primary"></i> قسم البرمجة</h2>
+                </div>
+                
+                <div class="more-grid">
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-cpp')">
+                        <i class="fa-solid fa-code" style="color: var(--primary);"></i>
+                        <span>محرر الأكواد</span>
+                    </div>
+                    
+                    <div class="glass-card grid-item" onclick="app.switchView('sec-puzzles')">
+                        <i class="fa-solid fa-puzzle-piece" style="color: #f59e0b;"></i>
+                        <span>التحديات البرمجية</span>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section id="sec-cpp" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.goBackFromCpp()"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                
+                <div id="video-learning-card" class="glass-card mb-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="font-size: 1rem;"><i class="fa-solid fa-video text-primary" style="color: black;"></i> تعلم بالفيديو (Tutorial)</h3>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="action-btn" onclick="app.copyVideoLink()" title="نسخ رابط الفيديو">
+                                <i class="fa-solid fa-copy"></i>
+                            </button>
+                            <button class="action-btn" onclick="app.openVideoExternally()" title="فتح الفيديو في نافذة خارجية">
+                                <i class="fa-solid fa-external-link"></i>
+                            </button>
+                            <button class="action-btn" onclick="app.toggleVideoPlayer()" title="إخفاء/إظهار الفيديو">
+                                <i id="btn-toggle-video-icon" class="fa-solid fa-chevron-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="video-input-group" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="video-tutorial-url" class="glass-input" placeholder="ألصق رابط يوتيوب هنا..." style="flex: 1;">
+                            <button class="btn-primary" onclick="app.loadVideoTutorial()" style="padding: 4px 10px; font-size: 0.75rem; white-space: nowrap; height: 34px; min-width: 60px;">
+                                <i class="fa-solid fa-play"></i> تشغيل
+                            </button>
+                        </div>
+                        <div style="display: flex; gap: 5px; overflow-x: auto; padding-bottom: 5px;">
+                            <button class="filter-btn" style="font-size: 0.7rem; padding: 3px 8px;" onclick="app.loadTutorialLink('cpp')">C++ Tutorial</button>
+                            <button class="filter-btn" style="font-size: 0.7rem; padding: 3px 8px;" onclick="app.loadTutorialLink('python')">Python Tutorial</button>
+                            <button class="filter-btn" style="font-size: 0.7rem; padding: 3px 8px;" onclick="app.loadTutorialLink('web')">Web Dev</button>
+                        </div>
+                    </div>
+
+                    <div id="video-player-container" style="display: none; border-radius: 12px; overflow: hidden; position: relative; width: 100%; padding-top: 56.25%; background: #000;">
+                        <iframe id="video-tutorial-frame" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p id="video-error-help" class="text-muted" style="font-size: 0.7rem; margin-top: 5px; display: none; line-height: 1.4;">
+                    </p>
+                </div>
+
+                
+                <div class="glass-card mb-3" id="cpp-projects-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="app.toggleCppProjectsDropdown()">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3 style="font-size: 1rem; margin: 0;"><i class="fa-solid fa-folder-open text-primary" style="color: black;"></i> الملفات </h3>
+                            <span id="cpp-projects-count-badge" style="background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);">0</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn-primary section-quick-add-btn code-quick-add-btn" onclick="event.stopPropagation(); app.openCppProjectModal()"><i class="fa-solid fa-plus"></i> <span>ملف جديد</span></button>
+                            <button class="action-btn" id="btn-toggle-cpp-projects" title="إخفاء / إظهار ملفات الأكواد" style="padding: 4px 8px; border-radius: 8px;" onclick="event.stopPropagation(); app.toggleCppProjectsDropdown()">
+                                <i id="cpp-projects-toggle-icon" class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="cpp-projects-wrapper" style="display: none; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.06);">
+                        <div id="cpp-projects-list" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch;">
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                                <div id="editor-container-card" class="glass-card mb-3" style="padding: 10px; display: flex; flex-direction: column; gap: 10px;">
+                    <div class="editor-toolbar" style="display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 0 5px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <i id="current-cpp-lang-icon" class="fa-solid fa-file-code" style="font-size: 1rem; color: var(--primary);"></i>
+                            <span id="current-cpp-project-name" style="font-weight: bold; font-size: 0.85rem; color: var(--primary); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">المشروع: غير محفوظ</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                            <select id="cpp-language-select" class="glass-input" style="width: auto; padding: 4px 8px; font-size: 0.8rem; height: auto; border-radius: 10px;" onchange="app.handleLanguageChange(this.value)">
+                                <option value="cpp">++C</option>
+                                <option value="python">Python</option>
+                                <option value="web">Web (HTML/CSS/JS)</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">#C</option>
+                                <option value="php">PHP</option>
+                            </select>
+                            <button class="btn-primary" onclick="app.runCode()" id="btn-run-cpp" style="padding: 4px 12px; font-size: 0.85rem; border-radius: 15px;">
+                                <i class="fa-solid fa-play"></i> Run
+                            </button>
+                            <button class="action-btn" title="تراجع" onclick="app.undoCpp()" style="color: var(--primary);"><i class="fa-solid fa-rotate-left"></i></button>
+                            <button class="action-btn" title="إعادة" onclick="app.redoCpp()" style="color: var(--primary);"><i class="fa-solid fa-rotate-right"></i></button>
+                            <button id="btn-save-cpp" class="action-btn" title="حفظ الكود" onclick="app.saveCurrentCppProject()" style="color: var(--primary);"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <button class="action-btn" title="مشاركة الكود" onclick="app.openShareModal()" style="color: #10b981;"><i class="fa-solid fa-share-nodes"></i></button>
+                            <button id="btn-solve-cpp" class="action-btn" title="تمييز كمحلول" onclick="app.markCurrentCppSolved()" style="color: var(--text-muted);"><i class="fa-regular fa-square-check"></i></button>
+                            <button class="action-btn" title="ملء الشاشة" onclick="app.toggleEditorFullscreen()" style="color: var(--primary);"><i id="btn-fullscreen-icon" class="fa-solid fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div style="direction: ltr !important; text-align: left !important;">
+                        <div id="cpp-editor" style="height: 300px; border-radius: 8px; font-size: 16px; direction: ltr; text-align: left; background: #000000;">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+   
+    cout<<" Hello World "<< endl;
+    
+    
+    return 0;
+}
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div id="web-preview-container" class="glass-card mb-3" style="display: none; padding: 10px; background: white; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <h3 style="color: #333; font-size: 0.9rem; margin: 0;"><i class="fa-solid fa-eye"></i> Live Preview</h3>
+                        <button class="action-btn" title="فتح في نافذة جديدة" onclick="app.openWebPreviewInNewWindow()" style="color: #666;"><i class="fa-solid fa-external-link"></i></button>
+                    </div>
+                    <iframe id="web-preview-iframe" style="width: 100%; height: 400px; border: none; background: white;"></iframe>
+                </div>
+            </section>
+
+            
+            <section id="sec-puzzles" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.goBackPuzzles()"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2><i class="fa-solid fa-puzzle-piece text-warning"></i> التحديات البرمجية</h2>
+                    <div class="points-badge" style="background: #f59e0b; color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">
+                        <i class="fa-solid fa-star"></i> <span id="puzzle-points-display">0</span> نقطة
+                    </div>
+                </div>
+
+                <div class="filter-tabs mb-3 glass-card p-2 flex-row">
+                    <button class="filter-btn active" onclick="app.filterPuzzles('all', this)">الكل</button>
+                    <button class="filter-btn" onclick="app.filterPuzzles('cpp', this)">++C</button>
+                    <button class="filter-btn" onclick="app.filterPuzzles('python', this)">Python</button>
+                    <button class="filter-btn" onclick="app.filterPuzzles('java', this)">Java</button>
+                </div>
+
+                <div id="puzzles-list" class="items-list">
+                    
+                </div>
+
+                
+                <div id="puzzle-detail" style="display: none;" class="mt-3">
+                    <div class="glass-card mb-3">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 id="puzzle-title" style="font-size: 1.1rem; color: var(--primary);">اسم التحدي</h3>
+                            <span id="puzzle-lang-tag" class="date-tag">C++</span>
+                        </div>
+                        <p id="puzzle-desc" class="text-muted mb-3">وصف التحدي سيظهر هنا...</p>
+                        
+                        <div style="direction: ltr !important; text-align: left !important; position: relative;">
+                            <div id="puzzle-editor" style="height: 250px; border-radius: 8px; font-size: 16px; background: #000;"></div>
+                        </div>
+
+                        <div class="flex-row mt-3">
+                            <button class="btn-primary flex-1" onclick="app.checkPuzzleSolution()">
+                                <i class="fa-solid fa-check-double"></i> تحقق من الحل
+                            </button>
+                            <button class="btn-secondary" onclick="app.resetPuzzleCode()">
+                                <i class="fa-solid fa-rotate-right"></i> إعادة تعيين
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-solved-projects" class="view-section">
+                <div class="glass-card mb-3 custom-header">
+                    <button class="back-btn" onclick="app.switchView('sec-more')"><i class="fa-solid fa-arrow-right"></i></button>
+                    <h2><i class="fa-solid fa-circle-check text-success"></i> المشاريع المحلولة</h2>
+                    <div class="points-badge" style="background: var(--primary); color: white; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;">
+                        <i class="fa-solid fa-code"></i> <span id="solved-projects-count">0</span>
+                    </div>
+                </div>
+
+                <div class="filter-tabs mb-3 glass-card p-2 flex-row">
+                    <button class="filter-btn active" onclick="app.filterSolvedProjects('all', this)">الكل</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('cpp', this)">++C</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('python', this)">Python</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('web', this)">Web</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('csharp', this)">#C</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('java', this)">Java</button>
+                    <button class="filter-btn" onclick="app.filterSolvedProjects('php', this)">PHP</button>
+                </div>
+
+                <div id="solved-projects-list" class="items-list">
+                    
+                </div>
+            </section>
+
+
+        </main>
+
+        <nav class="bottom-nav glass-panel" aria-label="التنقل الرئيسي">
+            <button class="nav-item active" data-target="sec-home" data-title="الرئيسية" aria-label="الرئيسية">
+                <i class="fa-solid fa-house text-xl"></i>
+                <span>الرئيسية</span>
+            </button>
+            
+            <button class="nav-item" data-target="sec-tasks" data-title="المهام" aria-label="المهام">
+                <div class="nav-icon-wrapper">
+                    <i class="fa-solid fa-list-check text-xl"></i>
+                    <span id="tasks-badge" class="nav-badge" style="display: none;">0</span>
+                </div>
+                <span>المهام</span>
+            </button>
+            <button class="nav-create" id="btn-main-add" type="button" onclick="app.handleMainAddClick(event)" aria-label="إضافة جديد" title="إضافة جديد">
+                <div class="nav-create-btn">
+                    <i class="fa-solid fa-plus" id="nav-create-icon"></i>
+                </div>
+                <span class="nav-create-label">إضافة</span>
+            </button>
+            <button class="nav-item" data-target="sec-subjects" data-title="المواد" aria-label="المواد">
+                <i class="fa-solid fa-layer-group text-xl"></i>
+                <span>المواد</span>
+            </button>
+            <button class="nav-item" data-target="sec-more" data-title="المزيد" aria-label="المزيد">
+                <i class="fa-solid fa-bars text-xl"></i>
+                <span>المزيد</span>
+            </button>
+        </nav>
+    </div>
+
+    
+    <div id="focus-mode" class="focus-overlay">
+        <button class="close-focus" onclick="app.closeFocusMode()"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="focus-content">
+            <div class="timer-container">
+                <svg class="progress-ring" width="240" height="240">
+                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8"
+                        fill="transparent" r="110" cx="120" cy="120" />
+                    <circle id="timer-progress" class="progress-ring__circle" stroke="var(--primary-light)"
+                        stroke-width="8" fill="transparent" r="110" cx="120" cy="120" />
+                </svg>
+                <div class="timer-display-premium" id="timer-text">25:00</div>
+            </div>
+
+            <h2 id="focus-status">جاهز للبدء؟</h2>
+            <p id="focus-subject" class="text-muted">اضغط ابدأ لبدء جلسة مذاكرة عميقة</p>
+
+            <div id="focus-task-container" style="margin-top: 15px; width: 100%; max-width: 250px;">
+                <select id="focus-task-select" class="glass-input" style="width: 100%; text-align: center; font-size: 0.9rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: white; padding: 8px;">
+                    <option value="" style="color: black;">-- اختر مهمة للعمل عليها --</option>
+                </select>
+            </div>
+
+            <div class="timer-controls mt-4">
+                <button class="btn-primary btn-large" id="btn-timer-start" onclick="app.toggleTimer()">
+                    <i class="fa-solid fa-play"></i> ابدأ الجلسة
+                </button>
+                <button class="btn-secondary" onclick="app.resetTimer()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="install-intro-overlay" class="install-intro-overlay">
+        <div class="intro-glow intro-glow-a"></div>
+        <div class="intro-glow intro-glow-b"></div>
+        <div class="intro-glow intro-glow-c"></div>
+        <div class="install-intro-card">
+            <div class="intro-topline"></div>
+            <div class="install-intro-head">
+                <div class="intro-logo-chip">
+                    <img src="mn.png" alt="شعار التطبيق">
+                </div>
+                <div class="intro-head-text">
+                    <span class="intro-eyebrow">مرحباً بكم في تطبيق صديق المبرمج</span>
+                    <h3>ثبّت التطبيق على جهازك</h3>
+                    <p>للوصول إليه سريعًا من الشاشة الرئيسية كأي تطبيق، ويعمل دون اتصال بالإنترنت.</p>
+                </div>
+            </div>
+            <div class="install-tabs" role="tablist">
+                <button class="install-tab active" data-step="android" onclick="app.showInstallStep('android')" role="tab"><i class="fa-brands fa-chrome"></i> كروم أندرويد</button>
+                <button class="install-tab" data-step="ios" onclick="app.showInstallStep('ios')" role="tab"><i class="fa-brands fa-apple"></i> آيفون / آيباد</button>
+            </div>
+            <div class="install-steps-wrap">
+                <div id="step-android" class="install-step" role="tabpanel">
+                    <ol>
+                        <li>افتح التطبيق في متصفح <strong>Google Chrome</strong>.</li>
+                        <li>اضغط على أيقونة <strong>القائمة</strong> (النقاط الثلاث) في أعلى الشاشة.</li>
+                        <li>اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong> أو <strong>"تثبيت التطبيق"</strong>.</li>
+                        <li>اضغط <strong>"تثبيت"</strong> وستجد أيقونة التطبيق على شاشتك الرئيسية.</li>
+                    </ol>
+                </div>
+                <div id="step-ios" class="install-step" style="display:none;" role="tabpanel">
+                    <ol>
+                        <li>افتح التطبيق في متصفح <strong>Safari</strong>.</li>
+                        <li>اضغط على أيقونة <strong>المشاركة</strong> أسفل الشاشة.</li>
+                        <li>اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong>.</li>
+                        <li>اضغط <strong>"إضافة"</strong> وستجد أيقونة التطبيق على شاشتك الرئيسية.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="install-intro-actions">
+                <button class="install-intro-done" onclick="app.closeInstallIntro()"><span>فهمت، ابدأ الاستخدام</span><i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="app.closeAllModals()"></div>
+
+    
+    <div id="add-menu-modal" class="modal glass-panel add-menu-modal">
+        <div class="sheet-drag-handle" aria-hidden="true"></div>
+        <div class="modal-header add-sheet-header">
+            <div class="add-sheet-title-group">
+                <div class="add-sheet-badge"><i class="fa-solid fa-plus"></i></div>
+                <div>
+                    <h3 class="add-sheet-title">إضافة جديد</h3>
+                    <p class="add-sheet-subtitle">اختر ما تريد تسجيله لتنظيم دراستك</p>
+                </div>
+            </div>
+            <button class="close-btn" onclick="app.closeModal('add-menu-modal')" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        
+        <div id="add-menu-context-card" class="add-context-card" style="display: none;">
+            
+        </div>
+
+        <div class="add-options-grid">
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('task-modal');">
+                <div class="add-option-icon icon-amber">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">مهمة جديدة</span>
+                    <span class="add-option-desc">واجب أو هدف دراسي</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('schedule-modal');">
+                <div class="add-option-icon icon-blue">
+                    <i class="fa-regular fa-calendar-days"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">موعد دراسي</span>
+                    <span class="add-option-desc">إضافة للجدول الأسبوعي</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('lecture-modal');">
+                <div class="add-option-icon icon-purple">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">محاضرة</span>
+                    <span class="add-option-desc">تسجيل محاضرة وأستاذ</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('subject-modal');">
+                <div class="add-option-icon icon-emerald">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">مادة دراسية</span>
+                    <span class="add-option-desc">مقرر وتتبع الساعات</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openLessonModal();">
+                <div class="add-option-icon icon-cyan">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">درس منجز</span>
+                    <span class="add-option-desc">توثيق ما تعلمته اليوم</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('exam-modal');">
+                <div class="add-option-icon icon-rose">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">امتحان قادم</span>
+                    <span class="add-option-desc">تاريخ الاختبار وتنبيهاته</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openModal('flashcard-modal');">
+                <div class="add-option-icon icon-pink">
+                    <i class="fa-solid fa-clone"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">بطاقة مراجعة</span>
+                    <span class="add-option-desc">سؤال وجواب للاختبار</span>
+                </div>
+            </button>
+
+            
+            <button class="add-option-rich" onclick="app.closeModal('add-menu-modal'); app.openCppProjectModal();">
+                <div class="add-option-icon icon-indigo">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div class="add-option-info">
+                    <span class="add-option-name">ملف كود جديد</span>
+                    <span class="add-option-desc">C++, Python, Web</span>
+                </div>
+            </button>
+        </div>
+
+    </div>
+
+    
+    <div id="schedule-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="schedule-modal-title">إضافة موعد دراسي</h3>
+            <button class="close-btn" onclick="app.closeModal('schedule-modal')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-schedule" onsubmit="app.saveSchedule(event)">
+                <div class="form-group">
+                    <label>اليوم</label>
+                    <select id="sch-day" required class="glass-input">
+                        <option value="الأحد">الأحد</option>
+                        <option value="الإثنين">الإثنين</option>
+                        <option value="الثلاثاء">الثلاثاء</option>
+                        <option value="الأربعاء">الأربعاء</option>
+                        <option value="الخميس">الخميس</option>
+                        <option value="الجمعة">الجمعة</option>
+                        <option value="السبت">السبت</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المادة الدراسية</label>
+                    <input type="text" id="sch-subject" required class="glass-input" placeholder="اسم المادة">
+                </div>
+                <div class="form-group">
+                    <label>وقت الموعد</label>
+                    <input type="time" id="sch-time-start" required class="glass-input">
+                </div>
+                <button type="submit" id="btn-save-schedule" class="btn-primary w-80" style="background: black;">حفظ
+                    الموعد</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="exam-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="exam-modal-title">إضافة موعد امتحان</h3>
+            <button class="close-btn" onclick="app.closeModal('exam-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-exam" onsubmit="app.saveExam(event)">
+                <div class="form-group">
+                    <label>اسم المادة</label>
+                    <input type="text" id="exm-subject" required class="glass-input" placeholder="اسم المادة">
+                </div>
+                <div class="form-group">
+                    <label>تاريخ الامتحان</label>
+                    <input type="date" id="exm-date" required class="glass-input">
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات (اختياري)</label>
+                    <input type="text" id="exm-notes" class="glass-input" placeholder="مثال: الفصل الأول والثاني">
+                </div>
+                <button type="submit" id="btn-save-exam" class="btn-primary w-80" style="background: black;">حفظ
+                    الموعد</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="task-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="task-modal-title">إضافة مهمة جديدة</h3>
+            <button class="close-btn" onclick="app.closeModal('task-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-task" onsubmit="app.saveTask(event)">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label>عنوان المهمة</label>
+                        <button type="button" class="voice-btn" onclick="app.startVoiceRecognition('tsk-title', this)" title="سجل بصوتك">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div class="input-container-voice">
+                        <input type="text" id="tsk-title" required class="glass-input" placeholder="ماذا تريد أن تنجز؟">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>موعد إنجاز المهمة</label>
+                    <input type="date" id="tsk-date" required class="glass-input">
+                </div>
+                <div class="form-group">
+                    <label>الأولوية</label>
+                    <div class="priority-picker" id="task-priority-picker">
+                        <button type="button" class="pp-opt pp-high active" data-priority="high" onclick="app.pickTaskPriority(this)">
+                            <i class="fa-solid fa-flag"></i> عالية
+                        </button>
+                        <button type="button" class="pp-opt pp-med" data-priority="medium" onclick="app.pickTaskPriority(this)">
+                            <i class="fa-solid fa-flag"></i> متوسطة
+                        </button>
+                        <button type="button" class="pp-opt pp-low" data-priority="low" onclick="app.pickTaskPriority(this)">
+                            <i class="fa-solid fa-flag"></i> منخفضة
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label>ملاحظات على المهمة (اختياري)</label>
+                        <button type="button" class="voice-btn" onclick="app.startVoiceRecognition('tsk-notes', this)" title="سجل بصوتك">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div class="input-container-voice">
+                        <textarea id="tsk-notes" class="glass-input" rows="2" placeholder="اكتب ملاحظات أو تفاصيل المهمة..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" id="btn-save-task" class="btn-primary w-80" style="background: black;">إضافة
+                    المهمة</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="lecture-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="lecture-modal-title">إضافة محاضرة</h3>
+            <button class="close-btn" onclick="app.closeModal('lecture-modal')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-lecture" onsubmit="app.saveLecture(event)">
+                <div class="form-group">
+                    <label>اسم المحاضرة / المادة</label>
+                    <input type="text" id="lec-name" required class="glass-input" placeholder="اسم المحاضرة...">
+                </div>
+                <div class="form-group">
+                    <label>اسم الدكتور / الأستاذ</label>
+                    <input type="text" id="lec-prof" required class="glass-input" placeholder="اسم الأستاذ">
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات إضافية (اختياري)</label>
+                    <textarea id="lec-notes" class="glass-input" rows="3" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+                </div>
+                <button type="submit" id="btn-save-lecture" class="btn-primary w-80" style="background: black;">حفظ
+                    المحاضرة</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="flashcard-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="flashcard-modal-title">إضافة بطاقة جديدة</h3>
+            <button class="close-btn" onclick="app.closeModal('flashcard-modal')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-flashcard" onsubmit="app.saveFlashcard(event)">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label> سؤال </label>
+                        <button type="button" class="voice-btn" onclick="app.startVoiceRecognition('fls-question', this)" title="سجل بصوتك">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div class="input-container-voice">
+                        <textarea id="fls-question" required class="glass-input" rows="2"
+                            placeholder="اكتب السؤال هنا..."></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label> جواب </label>
+                        <button type="button" class="voice-btn" onclick="app.startVoiceRecognition('fls-answer', this)" title="سجل بصوتك">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div class="input-container-voice">
+                        <textarea id="fls-answer" required class="glass-input" rows="2"
+                            placeholder="اكتب الجواب هنا..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" id="btn-save-flashcard" class="btn-primary w-80" style="background: black;">حفظ
+                    البطاقة</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="flashcard-study-modal" class="modal glass-panel" style="max-width: 400px; width: 95%;">
+        <div class="modal-header">
+            <h3> </h3>
+            <button class="close-btn" onclick="app.closeModal('flashcard-study-modal')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body text-center">
+            <div id="flashcard-container" class="review-card">
+                    <div class="review-card-block review-question-block">
+                        <span class="review-card-label"><i class="fa-solid fa-circle-question"></i> السؤال</span>
+                        <div id="study-question" class="review-card-text"></div>
+                    </div>
+                    <div class="review-card-divider"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="review-card-block review-answer-block">
+                        <span class="review-card-label"><i class="fa-solid fa-circle-check"></i> الجواب</span>
+                        <div id="study-answer" class="review-card-text"></div>
+                    </div>
+                </div>
+            <div class="flex-row mt-4" style="justify-content: center;">
+                <button class="btn-secondary" onclick="app.prevFlashcard()"><i
+                        class="fa-solid fa-chevron-right"></i></button>
+                <div id="flashcard-progress-text" class="mx-3" style="align-self: center; font-weight: bold;">1 / 5
+                </div>
+                <button class="btn-secondary" onclick="app.nextFlashcard()"><i
+                        class="fa-solid fa-chevron-left"></i></button>
+            </div>
+            <p class="text-muted mt-2">   </p>
+        </div>
+    </div>
+
+    
+    <div id="subject-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="subject-modal-title">إضافة مادة جديدة</h3>
+            <button class="close-btn" onclick="app.closeModal('subject-modal')"><i
+                class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-subject" onsubmit="app.saveSubject(event)">
+                <div class="form-group">
+                    <label>اسم المادة</label>
+                    <input type="text" id="sub-name" required class="glass-input"
+                        placeholder="مثال: رياضيات, فيزياء...">
+                </div>
+                <div class="form-group">
+                    <label>إجمالي الدروس المقررة للمادة</label>
+                    <input type="number" id="sub-total-lessons" required class="glass-input" placeholder="مثال: 20"
+                        min="1">
+                </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-clock"></i> الوحدات الدراسية (ساعات معتمدة)</label>
+                    <input type="number" id="sub-credit-hours" class="glass-input" placeholder="مثال: 3" min="1" max="30" value="3">
+                </div>
+                <button type="submit" id="btn-save-subject" class="btn-primary w-80" style="background: black;">حفظ
+                    المادة</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="lesson-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="lesson-modal-title">إضافة درس جديد</h3>
+            <button class="close-btn" onclick="app.closeModal('lesson-modal')"><i
+                    class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-lesson" onsubmit="app.saveLesson(event)">
+                <input type="hidden" id="les-subject-id">
+                <div class="form-group" id="les-subject-select-group">
+                    <label><i class="fa-solid fa-layer-group"></i> اختر المادة الدراسية</label>
+                    <select id="les-subject-select" class="glass-input" onchange="document.getElementById('les-subject-id').value = this.value">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ماذا تعلمت اليوم؟</label>
+                    <textarea id="les-title" required class="glass-input" rows="3"
+                        placeholder="اكتب وصفاً موجزاً للدرس..."></textarea>
+                </div>
+                <button type="submit" id="btn-save-lesson" class="btn-primary w-80" style="background: black;">إضافة
+                    الدرس</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="personalization-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="personalization-modal-title">التخصيص</h3>
+            <button class="close-btn" onclick="app.closeModal('personalization-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label><i class="fa-solid fa-palette"></i> ألوان التطبيق</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; justify-content: center;">
+                    <div onclick="app.changeColorTheme('default')" style="width: 45px; height: 45px; border-radius: 50%; cursor: pointer; background: #404043; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;"></div>
+                    <div onclick="app.changeColorTheme('emerald')" style="width: 45px; height: 45px; border-radius: 50%; cursor: pointer; background: #059669; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;"></div>
+                    <div onclick="app.changeColorTheme('rose')" style="width: 45px; height: 45px; border-radius: 50%; cursor: pointer; background: #e11d48; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;"></div>
+                    <div onclick="app.changeColorTheme('amber')" style="width: 45px; height: 45px; border-radius: 50%; cursor: pointer; background: #d97706; border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center;"></div>
+                </div>
+            </div>
+            
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+            
+            <div class="form-group">
+                <label><i class="fa-solid fa-image"></i> خلفية لوحة المتابعة</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; justify-content: space-between;">
+                    <div onclick="app.changeDashboardBg('m.jpg')" style="flex: 1; min-width: 80px; height: 60px; border-radius: 8px; cursor: pointer; background: url('m.jpg') center/cover; border: 2px solid var(--border-color);"></div>
+                    <div onclick="app.changeDashboardBg('12.jpg')" style="flex: 1; min-width: 80px; height: 60px; border-radius: 8px; cursor: pointer; background: url('12.jpg') center/cover; border: 2px solid var(--border-color);"></div>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <p class="text-muted mb-2" style="font-size: 0.8rem;">أو اختر صورة من جهازك:</p>
+                    <label for="dashboard-bg-upload" class="btn-primary" style="display: inline-block; padding: 6px 15px; font-size: 0.8rem; background: black; border: none; cursor: pointer; border-radius: 10px; color: white; font-weight: 600; transition: opacity 0.2s;">
+                        <i class="fa-solid fa-cloud-arrow-up" style="margin-left: 5px;"></i> رفع صورة مخصصة
+                    </label>
+                    <input type="file" id="dashboard-bg-upload" accept="image/*" style="display: none;" onchange="app.handleDashboardBgUpload(event)">
+                </div>
+                
+                <p class="text-muted mt-2 text-center" style="font-size: 0.75rem;">اضغط على الصورة لاختيارها</p>
+            </div>
+
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-text-height" style="color: var(--primary);"></i> حجم الخط</label>
+                <div class="font-size-control">
+                    <span class="font-size-label"><i class="fa-solid fa-font"></i></span>
+                    <input type="range" id="font-size-slider" min="13" max="22" step="1" value="16" oninput="app.setFontSize(this.value)">
+                    <span class="font-size-label"><i class="fa-solid fa-font" style="font-size:1.3em;"></i></span>
+                    <span id="font-size-value" class="font-size-value">16px</span>
+                </div>
+                <div class="font-size-options">
+                    <button class="font-size-btn" onclick="app.setFontSize(14)">صغير</button>
+                    <button class="font-size-btn active" onclick="app.setFontSize(16)">متوسط</button>
+                    <button class="font-size-btn" onclick="app.setFontSize(18)">كبير</button>
+                    <button class="font-size-btn" onclick="app.setFontSize(20)">كبير جداً</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="cpp-modal" class="modal glass-panel">
+        <div class="modal-header">
+            <h3 id="cpp-modal-title">إنشاء ملف كود جديد</h3>
+            <button class="close-btn" onclick="app.closeModal('cpp-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="form-cpp" onsubmit="app.createCppProject(event)">
+                <div class="form-group">
+                    <label>اسم الملف مع الامتداد (مطلوب)</label>
+                    <input type="text" id="cpp-title" required class="glass-input" placeholder="مثال: main.cpp" dir="ltr" style="text-align: left;">
+                    <p class="text-muted" style="font-size: 0.72rem; margin-top: 5px;">اكتب الاسم مع الامتداد: .cpp / .py / .html / .java / .cs / .php — وتُحدد اللغة تلقائياً من الامتداد.</p>
+                </div>
+                <div class="form-group">
+                    <label>المادة الدراسية (اختياري)</label>
+                    <select id="cpp-modal-subject" class="glass-input">
+                        <option value="">بدون مادة</option>
+                    </select>
+                </div>
+                <button type="submit" id="btn-save-cpp-modal" class="btn-primary w-80" style="background: black;">إنشاء الملف</button>
+            </form>
+        </div>
+    </div>
+
+
+    
+    <div id="share-modal" class="modal glass-panel" style="max-width: 450px; width: 95%;">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-share-nodes text-primary"></i> مشاركة الكود</h3>
+            <button class="close-btn" onclick="app.closeModal('share-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div id="share-card-container" style="perspective: 1000px; margin-bottom: 20px;">
+                <div id="share-card" class="glass-card" style="background: #000; padding: 25px; border-radius: 15px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    
+                    <div style="background: #000000; padding: 15px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); position: relative; z-index: 2;">
+                        <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56;"></div>
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e;"></div>
+                            <div style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f;"></div>
+                        </div>
+                        <pre id="share-code-display" style="color: #fff; font-family: 'Consolas', monospace; font-size: 0.75rem; margin: 0; white-space: pre-wrap; word-break: break-all; max-height: 250px; overflow: hidden; position: relative; direction: ltr; text-align: left;"></pre>
+                    </div>
+                    
+                    <div style="margin-top: 15px; color: white; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <img src="mn.png" style="width: 24px; height: 24px; border-radius: 5px; background: white; padding: 2px;">
+                            <span style="font-weight: 800; font-size: 0.8rem;">صديق المبرمج</span>
+                        </div>
+                        <span style="font-size: 0.65rem; opacity: 0.9;">web_vp2@</span>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-muted text-center mb-3" style="font-size: 0.8rem;">خذ لقطة شاشة (Screenshot) لمشاركة الكود في Story!</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button class="btn-primary" onclick="app.shareToWhatsApp()" style="background: #25D366; padding: 5px 8px; font-size: 0.75rem; box-shadow: none; min-height: 32px;">
+                    <i class="fa-brands fa-whatsapp"></i> واتساب
+                </button>
+                <button class="btn-primary" onclick="app.shareViaWebAPI()" style="padding: 5px 8px; font-size: 0.75rem; box-shadow: none; min-height: 32px;">
+                    <i class="fa-solid fa-share-nodes"></i> مشاركة ...
+                </button>
+            </div>
+            <button class="btn-secondary w-100 mt-2" onclick="app.copyCodeToClipboard()">
+                <i class="fa-regular fa-copy"></i> نسخ الكود نصياً
+            </button>
+        </div>
+    </div>
+
+
+    
+    <div id="grades-modal" class="modal glass-panel" style="max-width: 390px; width: 95%; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header">
+            <h3 id="grades-modal-title"><i class="fa-solid fa-star" style="color:#f59e0b;"></i> درجات المادة</h3>
+            <button class="close-btn" onclick="app.closeModal('grades-modal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div id="grades-subject-name-display" style="font-size:0.9rem; font-weight:700; color:var(--primary); margin-bottom:14px; padding:8px 12px; background:rgba(99,102,241,0.08); border-radius:8px;"></div>
+            <form id="form-grades" onsubmit="app.saveGrades(event)">
+                <input type="hidden" id="grd-subject-id">
+
+                
+                <div class="grade-input-section">
+                    <div class="grade-section-title">
+                        <i class="fa-solid fa-clipboard-list" style="color:#f59e0b;"></i>
+                        درجة الامتحان النصفي
+                    </div>
+                    <div class="grade-score-row">
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>المحصّلة</label>
+                            <input type="number" id="grd-midterm-score" class="glass-input" placeholder="0" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                        <span class="grade-slash">من</span>
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>الكاملة</label>
+                            <input type="number" id="grd-midterm-max" class="glass-input" placeholder="30" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="grade-input-section">
+                    <div class="grade-section-title">
+                        <i class="fa-solid fa-file-pen" style="color:#6366f1;"></i>
+                        درجة الامتحان النهائي
+                    </div>
+                    <div class="grade-score-row">
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>المحصّلة</label>
+                            <input type="number" id="grd-final-score" class="glass-input" placeholder="0" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                        <span class="grade-slash">من</span>
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>الكاملة</label>
+                            <input type="number" id="grd-final-max" class="glass-input" placeholder="50" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="grade-input-section">
+                    <div class="grade-section-title">
+                        <i class="fa-solid fa-flask" style="color:#10b981;"></i>
+                        العملي / الأعمال الفصلية (اختياري)
+                    </div>
+                    <div class="grade-score-row">
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>المحصّلة</label>
+                            <input type="number" id="grd-practical-score" class="glass-input" placeholder="0" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                        <span class="grade-slash">من</span>
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>الكاملة</label>
+                            <input type="number" id="grd-practical-max" class="glass-input" placeholder="20" min="0" step="0.5" oninput="app.updateGradePreview()">
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="grade-preview-box" class="grade-preview-box" style="display:none;">
+                    <div class="grade-preview-left">
+                        <span class="grade-preview-letter" id="grd-prev-letter">-</span>
+                    </div>
+                    <div class="grade-preview-right">
+                        <div class="grade-preview-total">
+                            <span id="grd-prev-score">0</span>
+                            <span style="opacity:0.6; font-size:0.8rem;"> / </span>
+                            <span id="grd-prev-max">100</span>
+                        </div>
+                        <div class="grade-preview-percent" id="grd-prev-percent">0%</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="background: black; margin-top:15px; width: 60%; margin-left: auto; margin-right: auto; display: flex; justify-content: center; align-items: center; font-size: 0.85rem; height: 40px;">
+                    <i class="fa-solid fa-floppy-disk" style="margin-left: 8px;"></i> حفظ الدرجات
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    
+    <div id="terminal-modal" class="modal glass-panel" style="max-width: 400px; width: 95%; background: #1e1e1e; border: 1px solid #333;">
+        <div class="modal-header" style="border-bottom: 1px solid #333; padding-bottom: 10px;">
+            <h3 style="color: #fff; font-size: 0.9rem; margin: 0;"><i class="fa-solid fa-terminal"></i> Terminal</h3>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <span id="terminal-status" title="حالة التشغيل" aria-label="حالة التشغيل" style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: #94a3b8; font-size: 0.82rem;"><i class="fa-solid fa-circle"></i></span>
+                <button class="action-btn" title="Clear" onclick="app.clearTerminal()" style="color: #999; padding: 2px 6px; font-size: 0.75rem;"><i class="fa-solid fa-eraser"></i></button>
+                <button class="action-btn" title="Copy" onclick="navigator.clipboard.writeText(document.getElementById('cpp-output').textContent)" style="color: #999; padding: 2px 6px; font-size: 0.75rem;"><i class="fa-regular fa-copy"></i></button>
+                <button class="close-btn" onclick="app.closeModal('terminal-modal')" style="background: rgba(255,255,255,0.1); color: #fff; width: 24px; height: 24px; font-size: 0.8rem;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="modal-body" style="padding: 10px 0 0 0;">
+            <div id="terminal-body" style="height: 300px; overflow-y: auto; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9rem; direction: ltr; text-align: left; padding: 5px; scrollbar-width: thin; scrollbar-color: #444 transparent;">
+                <div id="cpp-output" style="color: #00ff00; white-space: pre-wrap; word-break: break-all; margin-bottom: 5px;">في انتظار التشغيل...</div>
+                <div id="terminal-interactive-area" style="display: flex; align-items: flex-start; gap: 5px; color: #fff;">
+                    <span style="color: #00ff00; font-weight: bold;">></span>
+                    <textarea id="terminal-stdin" onkeydown="app.handleTerminalInput(event)" placeholder="اكتب المدخلات هنا واضغط Enter..." style="background: transparent; border: none; color: #fff; outline: none; width: 100%; font-family: inherit; font-size: inherit; resize: none; height: 1.2rem; padding: 0; line-height: 1.2rem;"></textarea>
+                </div>
+            </div>
+            <textarea id="cpp-stdin" style="display:none;"></textarea>
+        </div>
+    </div>
+
+    
+    <div id="story-viewer-modal" class="modal story-viewer-modal glass-panel">
+        <div id="story-viewer-body" class="story-viewer-container">
+            
+        </div>
+    </div>
+
+
+
+    
+    
+    <div id="toast-container" class="toast-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/felixhao28/JSCPP@gh-pages/dist/JSCPP.es5.min.js"></script>
+    <script src="vendor/javarunner.local.min.js"></script>
+    <script src="js/core.js?v=58"></script>
+    <script src="js/activation.js?v=1"></script>
+    <script src="js/levels.js?v=1"></script>
+    <script src="js/tasks.js?v=9"></script>
+    <script src="js/schedule.js?v=6"></script>
+    <script src="js/lectures.js?v=1"></script>
+    <script src="js/academics.js?v=3"></script>
+    <script src="js/reports.js?v=3"></script>
+    <script src="js/notifications.js?v=1"></script>
+    <script src="js/settings.js?v=1"></script>
+    <script src="js/editor.js?v=17"></script>
+    <script src="js/runners.js?v=13"></script>
+    <script src="js/puzzles.js?v=4"></script>
+    <script src="js/solved.js?v=1"></script>
+    <script src="js/gamification.js?v=1"></script>
+    <script src="js/trash.js?v=1"></script>
+    <script src="js/bootstrap.js?v=1"></script>
+    <script src="js/java-offline.js?v=2"></script>
+    <script src="js/php-offline.js?v=4"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch(err => console.error('SW Registration failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
